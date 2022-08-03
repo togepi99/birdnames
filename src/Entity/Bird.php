@@ -6,10 +6,16 @@ use App\Repository\BirdRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Blameable\Traits\BlameableEntity;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
 
 #[ORM\Entity(repositoryClass: BirdRepository::class)]
 class Bird
 {
+    use TimestampableEntity;
+    use BlameableEntity;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column()]
@@ -20,6 +26,10 @@ class Bird
 
     #[ORM\OneToMany(mappedBy: 'bird', targetEntity: BirdName::class, orphanRemoval: true)]
     private Collection $birdNames;
+
+    #[ORM\Column(length: 255)]
+    #[Gedmo\Slug(fields: ['oldName'])]
+    private ?string $oldNameSlugged = null;
 
     public function __construct()
     {
@@ -69,6 +79,18 @@ class Bird
                 $birdName->setBird(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOldNameSlugged(): ?string
+    {
+        return $this->oldNameSlugged;
+    }
+
+    public function setOldNameSlugged(string $oldNameSlugged): self
+    {
+        $this->oldNameSlugged = $oldNameSlugged;
 
         return $this;
     }
