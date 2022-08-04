@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <h1>{{ bird.oldName }}</h1>
+
+    <p>This bird needs a new name</p>
+
+    <h2>Suggested names</h2>
+    <ul>
+        {% for birdName in bird.birdNames %}
+            <li>{{ birdName.name }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

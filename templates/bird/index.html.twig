@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <h1>Bird renamer</h1>
+    <ul>
+        {% for bird in birds %}
+            <li>
+                <p>
+                    <a href="{{ path('bird', { birdSlug: bird.oldNameSlugged }) }}">
+                        {{ bird.oldName }}
+                    </a>
+                </p>
+                <p>{{ bird.birdNames|length }} names suggested</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
