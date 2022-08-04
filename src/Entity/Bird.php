@@ -46,7 +46,7 @@ class Bird
         return $this->oldName;
     }
 
-    public function setOldName(string $oldName): self
+    public function setOldName(?string $oldName): self
     {
         $this->oldName = $oldName;
 
@@ -88,7 +88,7 @@ class Bird
         return $this->oldNameSlugged;
     }
 
-    public function setOldNameSlugged(string $oldNameSlugged): self
+    public function setOldNameSlugged(?string $oldNameSlugged): self
     {
         $this->oldNameSlugged = $oldNameSlugged;
 
