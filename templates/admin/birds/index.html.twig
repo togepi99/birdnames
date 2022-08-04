@@ -1,0 +1,43 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}Bird index{% endblock %}
+
+{% block container %}
+    <h1>Bird index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Old name</th>
+                <th>Slug</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Creator</th>
+                <th>Last update</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for bird in birds %}
+            <tr>
+                <td>{{ bird.oldName }}</td>
+                <td>{{ bird.oldNameSlugged }}</td>
+                <td>{{ bird.createdAt ? bird.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ bird.updatedAt ? bird.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ bird.createdBy }}</td>
+                <td>{{ bird.updatedBy }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{{ path('app_bird_admin_show', {'id': bird.id}) }}">show</a>
+                    <a class="btn btn-primary" href="{{ path('app_bird_admin_edit', {'id': bird.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn btn-success" href="{{ path('app_bird_admin_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base-admin.html.twig' %}
+
+{% block title %}New Bird{% endblock %}
+
+{% block container %}
+    <h1>Create new Bird</h1>
+
+    {{ include('admin/birds/_form.html.twig') }}
+
+    <a href="{{ path('app_bird_admin_index') }}">back to list</a>
+{% endblock %}

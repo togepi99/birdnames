@@ -17,6 +17,10 @@ class AppFixtures extends Fixture
 
         UserFactory::createMany(20);
 
+        UserFactory::createOne([
+            'roles' => [ 'ROLE_ADMIN' ]
+        ]);
+
         BirdNameFactory::createMany(50, function () {
             return [
                 'bird' => BirdFactory::random(),

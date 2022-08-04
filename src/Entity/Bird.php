@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Blameable\Traits\BlameableEntity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BirdRepository::class)]
 class Bird
@@ -22,6 +23,7 @@ class Bird
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank]
     private ?string $oldName = null;
 
     #[ORM\OneToMany(mappedBy: 'bird', targetEntity: BirdName::class, orphanRemoval: true)]
