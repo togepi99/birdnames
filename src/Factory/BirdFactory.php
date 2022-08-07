@@ -40,19 +40,24 @@ final class BirdFactory extends ModelFactory
         $createdAt = self::faker()->dateTimeBetween('-100 days', '1 day');
 
         return [
-            // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
             'oldName' => self::faker()->colorName() . ' ' . self::faker()->word(),
             'oldNameSlugged' => null,
             'createdAt' => $createdAt,
             'updatedAt' => $createdAt,
+            'images' => [],
         ];
     }
 
     protected function initialize(): self
     {
-        // see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
         return $this
-            // ->afterInstantiate(function(Bird $bird): void {})
+            ->beforeInstantiate(function(array $attributes) {
+                if (is_int($attributes['images'])) {
+                    $images = ImageFactory::createMany($attributes['images']);
+                    $attributes['images'] = $images;
+                }
+                return $attributes;
+            })
         ;
     }
 

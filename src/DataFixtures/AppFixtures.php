@@ -13,7 +13,11 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-        BirdFactory::createMany(10);
+        BirdFactory::createMany(10, function() {
+            return [
+                'images' => rand(1, 6),
+            ];
+        });
 
         UserFactory::createMany(20);
 

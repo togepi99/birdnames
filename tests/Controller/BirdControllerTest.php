@@ -11,7 +11,7 @@ class BirdControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
     private BirdRepository $repository;
-    private string $path = '/bird/admin/';
+    private string $path = '/admin/birds/';
 
     protected function setUp(): void
     {

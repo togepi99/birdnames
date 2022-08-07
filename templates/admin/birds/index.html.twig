@@ -10,6 +10,7 @@
             <tr>
                 <th>Old name</th>
                 <th>Slug</th>
+                <th>First image</th>
                 <th>Created</th>
                 <th>Updated</th>
                 <th>Creator</th>
@@ -22,13 +23,20 @@
             <tr>
                 <td>{{ bird.oldName }}</td>
                 <td><a href="{{ path('bird', {birdSlug: bird.oldNameSlugged}) }}">{{ bird.oldNameSlugged }}</a></td>
+                <td>
+                    {% if bird.images|length > 0 %}
+                        <img src="{{ bird.images[0].filename|image_upload_path|imagine_filter('small_thumbnail') }}" alt="{{ bird.images[0].alt }}">
+                    {% endif %}
+                </td>
                 <td>{{ bird.createdAt ? bird.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ bird.updatedAt ? bird.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ bird.createdBy }}</td>
                 <td>{{ bird.updatedBy }}</td>
                 <td>
-                    <a class="btn btn-primary" href="{{ path('app_bird_admin_show', {'id': bird.id}) }}">show</a>
-                    <a class="btn btn-primary" href="{{ path('app_bird_admin_edit', {'id': bird.id}) }}">edit</a>
+                    <div class="btn-group">
+                        <a class="btn btn-light" href="{{ path('app_bird_admin_show', {'id': bird.id}) }}">Show</a>
+                        <a class="btn btn-primary" href="{{ path('app_bird_admin_edit', {'id': bird.id}) }}">Edit</a>
+                    </div>
                 </td>
             </tr>
         {% else %}
