@@ -5,6 +5,11 @@
 
     <p>This bird needs a new name</p>
 
+    {% for image in bird.images %}
+        <img src="{{ image.filename|image_upload_path }}" alt="{{ image.alt }}">
+        <caption>{{ image.attribution }}</caption>
+    {% endfor %}
+
     <h2>Suggested names</h2>
     <ul>
         {% for birdName in bird.birdNames %}

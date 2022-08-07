@@ -13,11 +13,11 @@
 {% endblock %}
 
 {% block delete_image_widget %}
-    <div class="d-flex" style="gap: 1rem;">
-        {{ form_row(form.shouldDelete) }}
+    <div class="d-flex align-items-center" style="gap: 1rem;">
         <img
-            src="{{ form.vars.value.filename|image_upload_path }}"
+            src="{{ form.vars.value.filename|image_upload_path|imagine_filter('small_thumbnail') }}"
             alt="{{ form.vars.value.alt }}"
         >
+        {{ form_row(form.shouldDelete) }}
     </div>
 {% endblock %}
