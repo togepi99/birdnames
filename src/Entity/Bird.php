@@ -34,7 +34,7 @@ class Bird
     #[Gedmo\Slug(fields: ['oldName'])]
     private ?string $oldNameSlugged = null;
 
-    #[ORM\ManyToMany(targetEntity: Image::class)]
+    #[ORM\ManyToMany(targetEntity: Image::class, cascade: ['persist'])]
     private Collection $images;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]

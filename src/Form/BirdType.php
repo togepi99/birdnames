@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Bird;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,6 +15,15 @@ class BirdType extends AbstractType
     {
         $builder->add('oldName');
         $builder->add('description', CKEditorType::class);
+        $builder->add('images', CollectionType::class, [
+            'entry_type' => DeleteImageType::class,
+            'entry_options' => [
+                'label' => false,
+            ],
+        ]);
+        $builder->add('new_image', NewImageType::class, [
+            'mapped' => false,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

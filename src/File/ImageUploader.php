@@ -17,7 +17,7 @@ class ImageUploader
         $this->imageDirectory = (string)$parameterBag->get('image_directory');
     }
 
-    public function moveUploadedFile(UploadedFile $file): string
+    public function prepareFileAndSetOnImage(UploadedFile $file, Image $image): void
     {
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
         $safeFilename = $this->slugger->slug($originalFilename);
@@ -25,10 +25,9 @@ class ImageUploader
 
         try {
             $file->move($this->imageDirectory, $fileName);
+            $image->setFilename($fileName);
         } catch (FileException $e) {
             // ... handle exception if something happens during file upload
         }
-
-        return $fileName;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Bird;
+use App\File\ImageUploader;
 use App\Form\BirdType;
 use App\Repository\BirdRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -49,12 +50,19 @@ class BirdAdminController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_bird_admin_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Bird $bird, BirdRepository $birdRepository): Response
+    public function edit(Request $request, Bird $bird, BirdRepository $birdRepository, ImageUploader $imageUploader): Response
     {
         $form = $this->createForm(BirdType::class, $bird);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $newFile = $form->get('new_image')->get('file')->getData();
+            if ($newFile) {
+                $image = $form->get('new_image')->getData();
+                $imageUploader->prepareFileAndSetOnImage($newFile, $image);
+                $bird->addImage($image);
+            }
+
             $birdRepository->add($bird, true);
 
             return $this->redirectToRoute('app_bird_admin_index', [], Response::HTTP_SEE_OTHER);

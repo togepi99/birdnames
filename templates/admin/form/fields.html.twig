@@ -1,0 +1,23 @@
+{% block new_image_widget %}
+    <div class="row">
+        <div class="col-sm-4">
+            {{ form_row(form.file) }}
+        </div>
+        <div class="col-sm-4">
+            {{ form_row(form.alt) }}
+        </div>
+        <div class="col-sm-4">
+            {{ form_row(form.attribution) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block delete_image_widget %}
+    <div class="d-flex" style="gap: 1rem;">
+        {{ form_row(form.shouldDelete) }}
+        <img
+            src="{{ form.vars.value.filename|image_upload_path }}"
+            alt="{{ form.vars.value.alt }}"
+        >
+    </div>
+{% endblock %}
