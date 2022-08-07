@@ -15,6 +15,7 @@ class DeleteImageType extends AbstractType
         $builder->add('shouldDelete', CheckboxType::class, [
             'mapped' => false,
             'label' => 'Delete this image',
+            'required' => false,
         ]);
     }
 

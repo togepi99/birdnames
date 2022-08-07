@@ -16,6 +16,20 @@
                 <td><a href="{{ path('bird', {birdSlug: bird.oldNameSlugged}) }}">{{ bird.oldNameSlugged }}</a></td>
             </tr>
             <tr>
+                <th>Description</th>
+                <td>
+                    {{ bird.description|raw }}
+                </td>
+            </tr>
+            <tr>
+                <th>Images</th>
+                <td>
+                    {% for image in bird.images %}
+                        <img src="{{ image.filename|image_upload_path|imagine_filter('small_thumbnail') }}" alt="{{ image.alt }}">
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
                 <th>Created</th>
                 <td>{{ bird.createdAt ? bird.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>

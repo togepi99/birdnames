@@ -6,6 +6,7 @@ use App\Entity\Bird;
 use App\File\ImageUploader;
 use App\Form\BirdType;
 use App\Repository\BirdRepository;
+use App\Repository\ImageRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,7 +51,7 @@ class BirdAdminController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_bird_admin_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Bird $bird, BirdRepository $birdRepository, ImageUploader $imageUploader): Response
+    public function edit(Request $request, Bird $bird, BirdRepository $birdRepository, ImageRepository $imageRepository, ImageUploader $imageUploader): Response
     {
         $form = $this->createForm(BirdType::class, $bird);
         $form->handleRequest($request);
@@ -61,6 +62,14 @@ class BirdAdminController extends AbstractController
                 $image = $form->get('new_image')->getData();
                 $imageUploader->prepareFileAndSetOnImage($newFile, $image);
                 $bird->addImage($image);
+            }
+
+            foreach ($form->get('images')->all() as $deleteFormItem) {
+                if ($deleteFormItem->get('shouldDelete')->getData()) {
+                    $image = $deleteFormItem->getData();
+                    $bird->removeImage($image);
+                    $imageRepository->remove($image);
+                }
             }
 
             $birdRepository->add($bird, true);
@@ -77,7 +86,7 @@ class BirdAdminController extends AbstractController
     #[Route('/{id}', name: 'app_bird_admin_delete', methods: ['POST'])]
     public function delete(Request $request, Bird $bird, BirdRepository $birdRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$bird->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $bird->getId(), $request->request->get('_token'))) {
             $birdRepository->remove($bird, true);
         }
 
