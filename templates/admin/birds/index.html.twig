@@ -21,7 +21,7 @@
         {% for bird in birds %}
             <tr>
                 <td>{{ bird.oldName }}</td>
-                <td>{{ bird.oldNameSlugged }}</td>
+                <td><a href="{{ path('bird', {birdSlug: bird.oldNameSlugged}) }}">{{ bird.oldNameSlugged }}</a></td>
                 <td>{{ bird.createdAt ? bird.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ bird.updatedAt ? bird.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ bird.createdBy }}</td>

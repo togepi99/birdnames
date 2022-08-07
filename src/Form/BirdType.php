@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Bird;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -11,9 +12,8 @@ class BirdType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            ->add('oldName')
-        ;
+        $builder->add('oldName');
+        $builder->add('description', CKEditorType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

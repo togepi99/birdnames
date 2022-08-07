@@ -13,7 +13,7 @@
             </tr>
             <tr>
                 <th>Slug</th>
-                <td>{{ bird.oldNameSlugged }}</td>
+                <td><a href="{{ path('bird', {birdSlug: bird.oldNameSlugged}) }}">{{ bird.oldNameSlugged }}</a></td>
             </tr>
             <tr>
                 <th>Created</th>
@@ -34,7 +34,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_bird_admin_index') }}">back to list</a>
+    <a class="btn btn-link" href="{{ path('app_bird_admin_index') }}">back to list</a>
 
     <a class="btn btn-primary" href="{{ path('app_bird_admin_edit', {'id': bird.id}) }}">edit</a>
 
